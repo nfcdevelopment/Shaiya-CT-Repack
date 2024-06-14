@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>806</ID>
+      <Description>"drops"</Description>
+      <Options moAlwaysHideChildren="1" moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>808</ID>
+          <Description>"Enable Helmet Drop"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+004BAFC8:
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+
+[DISABLE]
+
+004BAFC8:
+cmp eax,10
+je 004BB47A
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>809</ID>
+          <Description>"Enable Cape Drop"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+004BAFD1:
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+
+00473BBD:
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+
+[DISABLE]
+
+004BAFD1:
+cmp eax,18
+je 004BB47A
+
+00473BBD:
+cmp dword ptr [eax+000000A0],18
+je 0047468A
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>264</ID>
+          <Description>"Stack Fortune Bag Drops"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,1024)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+// esp+4 = bag
+// esp+8 = player
+// esp+14 = slot
+newmem:
+cmp dword ptr [esp+15C],00473BD4 // return point for fortune bag opening
+jne originalcode
+
+push eax
+push ecx
+push edx
+push ebx
+push esi
+push edi
+
+// esp+1C = bag
+// esp+20 = player
+// esp+2C = slot
+
+mov ebx, dword ptr [esp+1C]
+imul ebx,ebx,#24
+add ebx, dword ptr [esp+2C]
+imul ebx,ebx,#4
+add ebx,1C0
+mov edi, dword ptr [esp+20]
+add ebx,edi
+mov esi, dword ptr [ebx] // get item pointer
+
+test esi,esi
+je exit
+
+push esi // item pointer
+push edi // player pointer
+call func_get_bag_slot_next_identical_item
+
+test eax,eax
+je exit
+
+mov edx, dword ptr [esp+2C]
+mov ebx, dword ptr [esp+1C]
+
+movzx ecx,ah
+push ecx
+movzx ecx,al
+push ecx
+
+push edx
+push ebx
+
+mov ecx,edi
+call 004685A0
+
+exit:
+pop edi
+pop esi
+pop ebx
+pop edx
+pop ecx
+pop eax
+
+originalcode:
+add esp,15C
+jmp returnhere
+
+// push itemPointer
+// push playerPointer
+// call func_get_bag_slot_next_identical_item
+// success: al = bag, ah = slot
+// failure: eax = 0
+func_get_bag_slot_next_identical_item:
+push ecx
+push edx
+push ebx
+push esi
+push edi
+
+mov esi, dword ptr [esp+1C] // item pointer
+mov edi, dword ptr [esp+18] // player pointer
+
+mov al,#1
+mov ah,#0
+add edi,220
+
+func_get_bag_slot_next_identical_item_next:
+mov ecx, dword ptr [edi]
+
+// check if item exists
+test ecx,ecx
+je func_get_bag_slot_next_identical_item_next_check_slot
+
+// check if same item
+cmp ecx,esi
+je func_get_bag_slot_next_identical_item_next_check_slot
+
+// check if same item def
+mov edx, dword ptr [ecx+30]
+cmp edx, dword ptr [esi+30]
+jne func_get_bag_slot_next_identical_item_next_check_slot
+
+// check if max count isn't reached
+movzx ebx, byte ptr [edx+4B]
+cmp bl, byte ptr [ecx+42]
+ja func_get_bag_slot_next_identical_item_exit
+
+func_get_bag_slot_next_identical_item_next_check_slot:
+add edi,4
+inc ah
+cmp ah,#24
+jb func_get_bag_slot_next_identical_item_next
+
+func_get_bag_slot_next_identical_item_next_check_bag:
+xor ah,ah
+inc al
+cmp al,#5
+jbe func_get_bag_slot_next_identical_item_next
+
+xor eax,eax
+
+func_get_bag_slot_next_identical_item_exit:
+pop edi
+pop esi
+pop ebx
+pop edx
+pop ecx
+ret 8
+
+0046C27E:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+
+0046C27E:
+add esp,15C
+
+dealloc(newmem)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>810</ID>
+          <Description>"Gold To Inventory"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,512)
+label(returnhere)
+
+label(solo)
+label(solo_bonus)
+label(solo_bonus_ok)
+label(solo_bonus_wtc)
+label(solo_bonus_rpc)
+
+newmem:
+mov eax, dword ptr [esp+44] // raid pointer
+test eax,eax
+je solo
+jmp returnhere
+
+solo:
+mov edx, dword ptr [esp+40] // player pointer
+test edx,edx
+je 004BAE0D
+
+cmp dword ptr [edx+594C],2
+je solo_bonus_wtc
+cmp dword ptr [edx+594C],3
+je solo_bonus_rpc
+
+solo_bonus_ok:
+mov ecx, dword ptr [esp+18]
+call 0046BBA0
+jmp 004BAEB8
+
+solo_bonus:
+sub esp,4
+fild dword ptr [esp+1C]
+fld dword ptr [esp]
+fmul st(1),st(0)
+fstp dword ptr [esp]
+fistp dword ptr [esp+1C]
+add esp,4
+jmp solo_bonus_ok
+
+solo_bonus_wtc:
+mov dword ptr [esp-4],(float)1.200 // White Tiger Charm = +20%
+jmp solo_bonus
+
+solo_bonus_rpc:
+mov dword ptr [esp-4],(float)1.500 // Red Phoenix Charm = +50%
+jmp solo_bonus
+
+004BAD4C:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+
+004BAD4C:
+mov eax, dword ptr [esp+44]
+test eax,eax
+je 004BAE0D
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>811</ID>
+          <Description>"Drop To Inventory"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+label(solo)
+
+newmem:
+test ebp,ebp
+je solo
+jmp returnhere
+
+solo:
+mov ecx, dword ptr [esp+18]
+test ecx,ecx
+je 004BB438
+push ebx
+call 0046AE60
+jmp 004BB47A
+
+004BB1D5:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+
+004BB1D5:
+test ebp,ebp
+je 004BB438
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

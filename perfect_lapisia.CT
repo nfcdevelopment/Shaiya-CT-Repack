@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>33</ID>
+      <Description>"Perfect Lapisia"</Description>
+      <Options moManualExpandCollapse="1" moAllowManualCollapseAndExpand="1"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>787</ID>
+          <Description>"Perfect Lapisia"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Credits to Eric-Dutra16
+[ENABLE]
+alloc(newmem2,2048)
+alloc(typeid,4)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2:
+push eax
+mov eax,[edx+41]
+mov [typeid],eax
+pop eax
+
+originalcode2:
+cmp byte ptr [edx+40],5F
+jne ps_game.exe+6CAB7
+
+exit2:
+jmp returnhere2
+
+"ps_game.exe"+6C9FE:
+jmp newmem2
+nop
+nop
+nop
+nop
+nop
+returnhere2:
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp byte ptr [typeid],(int)3 // typeid perfect lapisia
+je 0046CD83
+cmp byte ptr [typeid],(int)8 // typeid perfect lapisia
+je 0046CD83
+
+originalcode:
+cmp esi,eax
+jae ps_game.exe+6D11C
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6CD7B:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(typeid)
+dealloc(newmem2)
+"ps_game.exe"+6C9FE:
+cmp byte ptr [edx+40],5F
+jne ps_game.exe+6CAB7
+
+dealloc(newmem)
+"ps_game.exe"+6CD7B:
+cmp esi,eax
+jae ps_game.exe+6D11C
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

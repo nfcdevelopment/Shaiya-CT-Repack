@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>477</ID>
+      <Description>"DEX Override (Melee)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(pop_originalcode)
+label(originalcode)
+label(success)
+
+define(dex_per_percent,#10)
+define(min_accuracy,#20)
+
+// edi = attacker
+// esi = target
+newmem:
+cmp byte ptr [edi+1385],1
+je originalcode
+
+push eax
+push ecx
+push edx
+sub esp,10
+
+mov eax, dword ptr [edi+1220]
+mov ecx, dword ptr [esi+1220]
+
+cmp eax,ecx
+jg success
+
+sub eax,ecx
+mov dword ptr [esp],eax
+mov dword ptr [esp+4],dex_per_percent
+fild dword ptr [esp+4] // dex_per_percent
+fild dword ptr [esp] // DEX difference
+fabs
+fdiv st(0), st(1)
+fistp dword ptr [esp]
+fistp dword ptr [esp+4]
+
+mov esi,#100
+sub esi, dword ptr [esp]
+
+cmp esi,min_accuracy
+jge pop_originalcode
+
+mov esi,min_accuracy
+
+pop_originalcode:
+add esp,10
+pop edx
+pop ecx
+pop eax
+
+originalcode:
+cmp esi,1
+jmp returnhere
+
+success:
+mov esi,#100
+jmp pop_originalcode
+
+00463D4B:
+jmp newmem
+returnhere:
+
+[DISABLE]
+
+00463D4B:
+mov esi,eax
+cmp esi,1
+
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>478</ID>
+      <Description>"DEX Override (Ranged)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(pop_originalcode)
+label(originalcode)
+label(success)
+
+define(dex_per_percent,#10)
+define(min_accuracy,#20)
+
+// edi = attacker
+// esi = target
+newmem:
+cmp byte ptr [edi+1395],1
+je originalcode
+
+push eax
+push ecx
+push edx
+sub esp,10
+
+mov eax, dword ptr [edi+1220]
+mov ecx, dword ptr [esi+1220]
+
+cmp eax,ecx
+jg success
+
+sub eax,ecx
+mov dword ptr [esp],eax
+mov dword ptr [esp+4],dex_per_percent
+fild dword ptr [esp+4] // dex_per_percent
+fild dword ptr [esp] // DEX difference
+fabs
+fdiv st(0), st(1)
+fistp dword ptr [esp]
+fistp dword ptr [esp+4]
+
+mov esi,#100
+sub esi, dword ptr [esp]
+
+cmp esi,min_accuracy
+jge pop_originalcode
+
+mov esi,min_accuracy
+
+pop_originalcode:
+add esp,10
+pop edx
+pop ecx
+pop eax
+
+originalcode:
+cmp esi,1
+jmp returnhere
+
+success:
+mov esi,#100
+jmp pop_originalcode
+
+00463C9D:
+jmp newmem
+returnhere:
+
+[DISABLE]
+
+00463C9D:
+mov esi,eax
+cmp esi,1
+
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

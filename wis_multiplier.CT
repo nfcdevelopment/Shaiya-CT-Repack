@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"Wis Multiplier"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem_one, 128) // New code cave
+label(return_one)
+
+newmem_one:
+mov edx,ecx // Save the wis value to edx
+add ecx,edx // Add the wis value to it's base value (x2)
+lea edx,[eax+ecx]
+mov [esp+14],edx
+jmp return_one
+
+ps_game.exe+5C7DE:
+jmp newmem_one
+db 90 90
+return_one:
+
+[DISABLE]
+dealloc(newmem_one)
+
+ps_game.exe+5C7DE:
+lea eax,[eax+edx*4]
+mov [esp+14],eax
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="31">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>476</ID>
+      <Description>"rune_cutting"</Description>
+      <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>472</ID>
+          <Description>"bootleggery"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//by Bowie
+[ENABLE]
+alloc(newmem,32)
+label(return)
+
+newmem:
+cmp dword ptr [ebp+00001270],02
+je 0047468A
+//original code
+cmp dword ptr [eax+000001A4],00
+jmp return
+
+00473ED7:
+jmp newmem
+nop
+nop
+return:
+
+[DISABLE]
+dealloc(newmem)
+00473ED7:
+cmp dword ptr [eax+000001A4],00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>115</ID>
+          <Description>"arena recall"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//by Bowie
+[ENABLE]
+alloc(newmem,32)
+label(return)
+
+newmem:
+cmp dword ptr [ebp+00001270],02
+je 0047468A
+//original code
+cmp dword ptr [eax+000001A4],00
+jmp return
+
+00473FFD:
+jmp newmem
+nop
+nop
+return:
+
+[DISABLE]
+dealloc(newmem)
+00473FFD:
+cmp dword ptr [eax+000001A4],00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>473</ID>
+          <Description>"capital recall"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//by Bowie
+[ENABLE]
+alloc(newmem,32)
+label(return)
+
+newmem:
+cmp dword ptr [ebp+00001270],02
+je 0047468A
+//original code
+cmp dword ptr [eax+000001A4],00
+jmp return
+
+00473DB0:
+jmp newmem
+nop
+nop
+return:
+
+[DISABLE]
+dealloc(newmem)
+00473DB0:
+cmp dword ptr [eax+000001A4],00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>474</ID>
+          <Description>"guild house"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//by Bowie
+[ENABLE]
+alloc(newmem,32)
+label(return)
+
+newmem:
+cmp dword ptr [ebp+00001270],02
+je 004742B6
+//original code
+cmp dword ptr [eax+000001A4],06
+jmp return
+
+00474196:
+jmp newmem
+nop
+nop
+return:
+
+[DISABLE]
+dealloc(newmem)
+00474196:
+cmp dword ptr [eax+000001A4],06
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>475</ID>
+          <Description>"party summon"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//by [DEV]AkaneTendo
+[ENABLE]
+alloc(newmem,32)
+label(return)
+
+newmem:
+cmp dword ptr [ebp+00001270],02
+je 0047468A
+//original code
+cmp dword ptr [ebp+000058B8],00
+jmp return
+
+00473400:
+jmp newmem
+nop
+nop
+return:
+
+[DISABLE]
+dealloc(newmem)
+00473400:
+cmp dword ptr [ebp+000058B8],00
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

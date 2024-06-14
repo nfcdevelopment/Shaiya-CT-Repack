@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>773</ID>
+      <Description>"admin"</Description>
+      <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>775</ID>
+          <Description>"Ability to mount invisible"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//gm can mount while invisible by Bowie 02/2020
+[ENABLE]
+alloc(newmem,128)
+label(return)
+label(exit)
+//will appear visible but is invisible to others
+newmem:
+mov al,01 //move value 01 into an 8-bit register
+mov [edi+00005814],al //make the offset value 01
+mov [edi+0000147C],edx //and mount the character
+
+exit:
+jmp return
+
+0049DBDE:
+jmp newmem
+nop
+return:
+
+[DISABLE]
+dealloc(newmem)
+0049DBDE:
+mov [edi+0000147C],edx
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>776</ID>
+          <Description>"/silence CharName on"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,64)
+
+newmem:
+silence_on:
+mov byte ptr [esi+16A],2
+
+oc_silence_on:
+mov dword ptr [esi+581C],FFFFFFFF
+jmp ret_silence_on
+
+silence_off:
+mov byte ptr [eax+16A],0
+
+oc_silence_off:
+mov dword ptr [eax+581C],edi
+jmp ret_silence_off
+
+00483DD6:
+jmp silence_on
+nop
+nop
+nop
+nop
+nop
+ret_silence_on:
+
+00483E4D:
+jmp silence_off
+nop
+ret_silence_off:
+
+[DISABLE]
+
+00483DD6:
+mov dword ptr [esi+581C],FFFFFFFF
+
+00483E4D:
+mov dword ptr [eax+581C],edi
+
+dealloc(newmem)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>777</ID>
+          <Description>"Admin Target Resurrection Rune Both Factions"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+label(originalcode)
+
+newmem:
+cmp byte ptr [ebp+5808],1
+je 00473A87
+cmp byte ptr [ebp+5808],2
+je 00473A87
+
+originalcode:
+mov dl, byte [ebp+12D]
+jmp returnhere
+
+00473A75:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+
+00473A75:
+mov dl, byte [ebp+12D]
+
+dealloc(newmem)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>778</ID>
+          <Description>"Admin Read Both Trade Chats"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,32)
+
+newmem:
+cmp byte ptr [ecx+5808],2
+jbe returnhere
+
+cmp dl, byte ptr [ecx+12D]
+jne 004279CE
+
+jmp returnhere
+
+00427938:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+
+00427938:
+cmp dl, byte ptr [ecx+12D]
+jne 004279CE
+
+dealloc(newmem)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>516</ID>
+          <Description>"Disallow /eclear 48 status"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//Author: Totoshka, skype: antoshka1312
+//http://www.elitepvpers.com/forum/shaiya-trading/4166314-development-projects.html
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+cmp byte ptr[ebp+5808],03
+je 004823D9
+originalcode:
+mov byte ptr [ebx+16],00
+add ebx,02
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+823C5:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+823C5:
+mov byte ptr [ebx+16],00
+add ebx,02
+//Alt: db C6 43 16 00 83 C3 02
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>517</ID>
+          <Description>"Disallow /set 48 status"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//Author: Totoshka, skype: antoshka1312
+//http://www.elitepvpers.com/forum/shaiya-trading/4166314-development-projects.html
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp byte ptr[esi+5808],03
+je 00480D96
+originalcode:
+lea eax,[ebp+07]
+mov byte ptr [ebp+1B],00
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+80D84:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+80D84:
+lea eax,[ebp+07]
+mov byte ptr [ebp+1B],00
+//Alt: db 8D 45 07 C6 45 1B 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>481</ID>
+          <Description>"Disallow /iclear 48 status"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//Author: Totoshka, skype: antoshka1312
+//http://www.elitepvpers.com/forum/shaiya-trading/4166314-development-projects.html
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+cmp byte ptr[ebp+5808],03
+je 00482356
+originalcode:
+mov byte ptr [ebx+16],00
+add ebx,02
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+82342:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+82342:
+mov byte ptr [ebx+16],00
+add ebx,02
+//Alt: db C6 43 16 00 83 C3 02
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>490</ID>
+          <Description>"Disallow /mmake above 32"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//mmake only if status 16 by Bowie 04/2020
+[ENABLE]
+alloc(newmem,128)
+label(return)
+label(exit)
+
+newmem:
+cmp byte ptr [esi+00005808],02 //status 16
+ja ps_game.exe+81945 //fail if above 16
+cmp dword ptr [esi+000000E0],00 //original
+
+exit:
+jmp return
+
+004818BE:
+jmp newmem
+nop
+nop
+return:
+
+[DISABLE]
+dealloc(newmem)
+004818BE:
+cmp dword ptr [esi+000000E0],00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>518</ID>
+          <Description>"Disallow /imake &amp; /getitem on 32 status"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//Author: Totoshka, skype: antoshka1312
+//http://www.elitepvpers.com/forum/shaiya-trading/4166314-development-projects.html
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp byte ptr[esi+5808],02
+je 004817DF
+originalcode:
+movzx eax,byte ptr [ebp+02]
+cmp eax,01
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+817AA:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+817AA:
+movzx eax,byte ptr [ebp+02]
+cmp eax,01
+//Alt: db 0F B6 45 02 83 F8 01
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

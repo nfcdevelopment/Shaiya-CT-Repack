@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>260</ID>
+      <Description>"Shared PvP Kills"</Description>
+      <Color>404080</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(M1)
+label(M2)
+label(M3)
+label(M4)
+label(M5)
+label(M6)
+label(M7)
+label(M8)
+label(M9)
+
+newmem:
+pushad
+mov edi,esi
+mov edx,[esi+000000E0]
+xor ecx,ecx
+mov cl,[esi+0000012D]
+cmp ecx,01
+je setzero
+mov ecx,01
+jmp gocall
+setzero:
+mov ecx,00
+gocall:
+push ecx
+push edx
+call ShareKill
+popad
+originalcode:
+
+exit:
+jmp 00465ACF
+
+ShareKill:
+sub esp,10 { 16 }
+push ebx
+push ebp
+mov ebp,[esp+1C]
+push esi
+call dword ptr [ps_game.exe+1540D0] { -&gt;kernel32.GetTickCount }
+lea esi,[ebp+0000018C]
+mov ebx,eax
+push esi
+add ebx,000003E8 { 1000 }
+mov [esp+1C],esi
+call dword ptr [ps_game.exe+1540DC] { -&gt;ntdll.RtlEnterCriticalSection }
+mov ecx,[ebp+00000184]
+mov eax,[ecx+04]
+mov [ebp+00000188],eax
+cmp eax,ecx
+je M1
+test eax,eax
+je M1
+M8:
+mov eax,[eax+08]
+test eax,eax
+je M2
+lea esi,[eax-000000D0]
+jmp M3
+M2:
+xor esi,esi
+M3:
+// cmp byte ptr [esi+00005808],0A { if ( *(_BYTE *)(v8 + 22376) &gt; 0xAu )}
+//ja M4
+//mov eax,[ebp+00000188] {  v6 = (CObjectLink *)CZone-&gt;m_listUser.cursor-&gt;next;}
+//mov eax,[eax+04]
+//jmp M6
+
+M4:
+cmp edi,esi
+jne M5
+mov ecx,[ebp+00000188]
+mov eax,[ecx+04]
+jmp M6
+M5:
+mov dl,[esp+24]
+cmp byte ptr [esi+160],(int)86
+je killhere
+cmp [esi+0000012D],dl { if ( *(_BYTE *)(v8 + 301) == byCountry )}
+jne M9
+
+killhere:
+// NEW CODE HERE //
+fld dword ptr [edi+000000D0]
+push ecx
+fsub dword ptr [esi+000000D0]
+fstp dword ptr [esp+14]
+fld dword ptr [edi+000000D8]
+fsub dword ptr [esi+000000D8]
+fstp dword ptr [esp+24]
+fld dword ptr [esp+24]
+fld dword ptr [esp+14]
+fmul st(0),st(0)
+fld st(1)
+fmulp st(2),st(0)
+faddp
+fstp dword ptr [esp+24]
+fld dword ptr [esp+24]
+fstp dword ptr [esp]
+call ps_game.exe+1B8A0
+fcomp dword ptr [RangeFloat] { [700.00] }
+add esp,04 { 00000004 }
+fnstsw ax
+sahf
+//test ah,41 { 65 }
+jae M9 { if ( v11 &gt; 10.0 )}
+//Need check party
+cmp [esi+000017F4],00
+je M9
+mov ecx,esi
+push edi
+call ps_game.exe+67CE0
+//               //
+M9:
+mov edx,[ebp+00000188]
+mov eax,[edx+04]
+M6:
+cmp eax,[ebp+00000184] { while ( v6 != CZone-&gt;m_listUser.head &amp;&amp; v6 );}
+mov [ebp+00000188],eax
+je M7
+test eax,eax
+jne M8
+M7:
+mov esi,[esp+18] { v4 = &amp;this-&gt;m_listUser.m_csList.m_cs;}
+M1:
+push esi
+call dword ptr [ps_game.exe+1540D4] { -&gt;ntdll.RtlLeaveCriticalSection }
+pop esi
+pop ebp
+pop ebx
+add esp,10 { 16 }
+ret 0008 { 00000008 }
+
+RangeFloat:
+dd 42C80000
+
+"ps_game.exe"+65AAD:
+jmp newmem
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+65AAD:
+call ps_game.exe+67EE0
+//Alt: db E8 2E 24 00 00
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

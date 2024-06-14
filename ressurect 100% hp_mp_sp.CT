@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>231</ID>
+      <Description>"ressurect with hp/mp/sp at 100%"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem, 1024)
+
+// handles the recovery of HP/MP/SP
+ps_game.exe+66EFD:
+jmp newmem
+db 90
+
+newmem:
+
+// sp
+mov ecx,[edi+00001238]
+add ecx,ecx
+mov [edi+00001238],ecx
+
+// mp
+mov edx,[edi+0000123C]
+add edx,edx
+mov [edi+0000123C],edx
+push ecx
+
+// hp
+mov ecx,[edi+00001234]
+add ecx,ecx
+mov [edi+00001234],ecx
+
+// return to CUser::Rebirth
+jmp ps_game.exe+66F10
+
+[DISABLE]
+dealloc(newmem)
+
+ps_game.exe+66EFD:
+mov ecx,[edi+00001238]
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

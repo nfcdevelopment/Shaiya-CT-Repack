@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>797</ID>
+      <Description>"lapis without hammer buy zero no fail"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,1024)
+
+newmem:
+get_data:
+cmp dword ptr [ecx+80],0
+je get_data_buy_zero
+
+oc_get_data:
+movzx ecx, word ptr [ebp+136]
+jmp ret_get_data
+
+get_data_buy_zero:
+mov eax,#100
+jmp 0046F1D5
+
+set_chance:
+push ecx
+mov ecx, dword ptr [ebx+30]
+cmp dword ptr [ecx+80],0
+pop ecx
+jne oc_set_chance
+
+fld qword ptr [dq_perfect_chance]
+jmp ret_set_chance
+
+oc_set_chance:
+fld qword ptr [005740E8]
+jmp ret_set_chance
+
+link_lapis:
+cmp dword ptr [ecx+80],0
+je link_lapis_buy_zero
+
+oc_link_lapis:
+movzx ecx, word ptr [ebp+136]
+jmp ret_link_lapis
+
+link_lapis_buy_zero:
+mov dword ptr [esp-4],#100
+fild dword ptr [esp-4]
+jmp 0046E626
+
+adjust_final_chance:
+push eax
+mov eax, dword ptr [esp+20]
+mov eax, dword ptr [eax+30]
+cmp dword ptr [eax+80],0
+pop eax
+jne oc_adjust_final_chance
+
+cmp esi,64
+jle 0046E73D
+mov esi,64
+jmp ret_adjust_final_chance
+
+oc_adjust_final_chance:
+cmp esi,32
+jle 0046E73D
+mov esi,32
+jmp ret_adjust_final_chance
+
+dq_perfect_chance:
+dq (double)100.00000000000000
+
+0046F1C1:
+jmp get_data
+nop
+nop
+ret_get_data:
+
+0046F322:
+jmp set_chance
+nop
+ret_set_chance:
+
+0046E5E1:
+jmp link_lapis
+nop
+nop
+ret_link_lapis:
+
+0046E733:
+jmp adjust_final_chance
+nop
+nop
+nop
+nop
+nop
+ret_adjust_final_chance:
+
+[DISABLE]
+
+0046F1C1:
+movzx ecx, word ptr [ebp+136]
+
+0046F322:
+fld qword ptr [005740E8]
+
+0046E5E1:
+movzx ecx, word ptr [ebp+136]
+
+0046E733:
+cmp esi,32
+jge short 0046E72D
+mov esi,32
+
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

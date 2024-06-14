@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>18</ID>
+      <Description>"union lead summon raid"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+
+
+originalcode:
+call ps_game.exe+4ECF0
+push eax
+push ecx
+mov eax,[edi+17f4]
+mov ecx,[eax+0c]
+imul ecx,ecx,8
+add  ecx,18
+mov  ecx,[eax+ecx]
+cmp edi,ecx
+pop ecx
+pop eax
+je ps_game.exe+9e4ea
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+9E4E1:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+9E4E1:
+call ps_game.exe+4ECF0
+//Alt: db E8 0A 08 FB FF
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

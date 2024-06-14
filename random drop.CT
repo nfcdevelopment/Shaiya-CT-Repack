@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>642</ID>
+      <Description>"Random Drop"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,1024)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+define(stack_alloc,100)
+
+// 4 bytes - global random drop count
+// 4 bytes - x10,000 account random drop count
+//alloc(player_random_drop_order,40004)
+//define(accounts,#10000)
+
+// ebp = raid
+newmem:
+cmp dword ptr [esp+18],0 // Killer
+je originalcode
+
+push ebx
+sub esp,stack_alloc
+
+mov esi,esp // store the stack pointer
+
+// clear the memory
+push stack_alloc
+push 0
+push esi
+call msvcrt.memset
+add esp,C
+
+lea eax, dword ptr [ebp+118]
+mov dword ptr [esi+stack_alloc-4],eax
+push eax
+call dword ptr [005540DC] // ntdll.RtlEnterCriticalSection
+
+mov ecx, dword ptr [esi+stack_alloc+C] // mob
+xor ebx,ebx
+
+random_next:
+mov edx, dword ptr [ebp+ebx*8+18]
+
+cmp edx, dword ptr [esi+stack_alloc+1C]
+je random_ok // skip all further checks for killer
+
+push edx
+push ecx
+call func_is_player_within_range
+test eax,eax
+je random_next_check
+
+random_ok:
+mov eax, dword ptr [esi+stack_alloc-8]
+mov dword ptr [esi+eax*4],edx
+inc dword ptr [esi+stack_alloc-8]
+
+random_next_check:
+inc ebx
+cmp ebx, dword ptr [ebp+10]
+jb random_next
+
+call msvcrt.rand
+cdq
+idiv dword ptr [esi+stack_alloc-8]
+
+mov edx, dword ptr [esi+edx*4]
+
+push ebp
+push edx
+call func_get_player_index_in_party
+
+mov edx,eax // index of player in party
+
+mov eax, dword ptr [esi+stack_alloc-4]
+push eax
+call dword ptr [005540D4] // ntdll.RtlLeaveCriticalSection
+
+exit:
+add esp,stack_alloc
+pop ebx
+jmp returnhere
+
+originalcode:
+call 0051BD66
+cdq
+idiv dword ptr [ebp+10]
+jmp returnhere
+
+// push player
+// push mob
+// call func_is_player_within_range
+func_is_player_within_range:
+push ecx
+push edx
+push ebx
+sub esp,4
+
+xor eax,eax // clearing the return value (false)
+
+mov ecx, dword ptr [esp+14] // mob
+mov edx, dword ptr [esp+18] // player
+
+// comparing zone pointers
+mov ebx, dword ptr [ecx+8C]
+cmp ebx, dword ptr [edx+E0]
+jne func_is_player_within_range_exit
+
+ // load mob.X
+fld dword ptr [ecx+7C]
+// subtract player.X from it
+fsub dword ptr [edx+D0]
+// get the absolute value
+fabs
+ // square it
+fmul st(0),st(0)
+// store result in the stack and pop floating point register
+fstp dword ptr [esp]
+
+// load mob.Z
+fld dword ptr [ecx+84]
+// subtract player.Z from it
+fsub dword ptr [edx+D8]
+// get the absolute value
+fabs
+// square it
+fmul st(0),st(0)
+// add the value previously stored in stack to it
+fadd dword ptr [esp]
+
+// square root
+fsqrt
+// store result in the stack and pop floating point register
+fstp dword ptr [esp]
+
+cmp dword ptr [esp],(float)100.000 // max range
+ja func_is_player_within_range_exit
+
+inc eax // set return value to true
+func_is_player_within_range_exit:
+add esp,4
+pop ebx
+pop edx
+pop ecx
+ret 8
+
+// push party
+// push player
+// call func_get_player_index_in_party
+func_get_player_index_in_party:
+push ecx
+push edx
+push ebx
+
+mov ecx, dword ptr [esp+10] // player
+mov edx, dword ptr [esp+14] // party
+
+mov eax, dword ptr [edx+10] // party member count
+
+func_get_player_index_in_party_next:
+dec eax
+
+cmp dword ptr [edx+eax*8+18],ecx
+je func_get_player_index_in_party_exit
+
+test eax,eax
+jne func_get_player_index_in_party_next
+
+func_get_player_index_in_party_exit:
+pop ebx
+pop edx
+pop ecx
+ret 8
+
+//player_random_drop_order:
+//dd CCCCCCCC
+
+004BB266:
+jmp newmem
+nop
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+//dealloc(player_random_drop_order)
+
+004BB266:
+call 0051BD66
+cdq
+idiv dword ptr [ebp+10]
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

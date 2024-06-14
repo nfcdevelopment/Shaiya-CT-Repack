@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"Perfect Recreation Rune Max"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+// [Dev]Beno - 2020
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+mov [ebp+00],dx
+mov eax,#15 //change this to you stats
+//movzx eax,bl original code
+// the script will make 2500 HP and all Stats 25.
+exit:
+jmp returnhere
+
+"ps_game.exe"+D2C20:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+D2C20:
+mov [ebp+00],dx
+movzx eax,bl
+//Alt: db 66 89 55 00 0F B6 C3
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

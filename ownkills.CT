@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>820</ID>
+      <Description>"Own Kills 1"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,32)
+label(returnhere)
+label(originalcode)
+
+newmem:
+mov esi,edi
+
+originalcode:
+mov eax,[esi+0000014C]
+jmp returnhere
+
+00467EE9:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+{
+00467EE9:
+mov eax,[esi+0000014C]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>484</ID>
+      <Description>"Own Kills 2 - Solo"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,64)
+label(returnhere)
+
+newmem:
+push edi
+mov ecx,esi
+mov esi,edi
+mov edi,ecx
+call 00467EE0
+pop edi
+jmp returnhere
+
+00465764:
+jmp newmem
+nop
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+{
+00465764:
+mov ecx,esi
+mov esi,edi
+call 00467EE0
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

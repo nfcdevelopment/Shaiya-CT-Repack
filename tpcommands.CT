@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>833</ID>
+      <Description>"teleportion system"</Description>
+      <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>831</ID>
+          <Description>"timer"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(fail)
+label(ext1)
+label(exit)
+label(ext)
+
+newmem:
+//
+mov al,[edi+000058B8]
+cmp al,1
+jne exit
+//timer
+push eax
+call dword ptr [005540D0]
+cmp eax,[edi+6400]
+jl fail
+pop eax
+
+mov eax,[edi+6404]
+cmp eax,[edi+000000D0]
+jne ext1
+mov eax,[edi+6408]
+cmp eax,[edi+000000D8]
+jmp exit
+
+fail:
+pop eax
+ext1:
+xor eax,eax
+jmp ext
+
+exit:
+mov eax,[edi+000058B8]
+
+ext:
+jmp returnhere
+
+"ps_game.exe"+9DD79:
+jmp newmem
+nop
+returnhere:
+ 
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+9DD79:
+mov eax,[edi+000058B8]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>877</ID>
+          <Description>"player"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(go_0)
+label(go_1)
+label(go_2)
+label(go_3)
+label(go_4)
+label(go_5)
+label(go_6)
+label(go_7)
+label(go_8)
+label(go_9)
+label(go_10)
+label(go_11)
+label(go_12)
+label(go_13)
+label(continue)
+label(exit)
+label(returnhere)
+
+newmem:
+mov eax,[ebx+3]
+cmp [command],eax
+jne continue
+mov al,byte ptr [ebx+7]
+cmp [go0],al
+je go_0
+cmp [go1],al
+je go_1
+cmp [go2],al
+je go_2
+cmp [go3],al
+je go_3
+cmp [go4],al
+je go_4
+cmp [go5],al
+je go_5
+cmp [go6],al
+je go_6
+cmp [go7],al
+je go_7
+cmp [go8],al
+je go_8
+cmp [go9],al
+je go_9
+cmp [go10],al
+je go_10
+cmp [go11],al
+je go_11
+cmp [go12],al
+je go_12
+cmp [go13],al
+je go_13
+jmp 0047FC57 //No send message
+
+go_0:
+mov [ebp+000058BC],#42//Target Map
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_0L
+mov dword ptr [ebp+000058C0],(float)51.959//X
+mov dword ptr [ebp+000058C4],(float)1.240//Y
+mov dword ptr [ebp+000058C8],(float)56.540//Z
+jmp exit
+go_0L:
+mov dword ptr [ebp+000058C0],(float)51.959//X
+mov dword ptr [ebp+000058C4],(float)1.240//Y
+mov dword ptr [ebp+000058C8],(float)56.540//Z
+jmp exit
+
+go_1:
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_1L
+mov [ebp+000058BC],#36//Target Map
+mov dword ptr [ebp+000058C0],(float)395.946//X
+mov dword ptr [ebp+000058C4],(float)42.740//Y
+mov dword ptr [ebp+000058C8],(float)446.103//Z
+jmp exit
+go_1L:
+mov [ebp+000058BC],#35//Target Map
+mov dword ptr [ebp+000058C0],(float)592.268//X
+mov dword ptr [ebp+000058C4],(float)26.940//Y
+mov dword ptr [ebp+000058C8],(float)294.085//Z
+jmp exit
+
+go_2:
+mov [ebp+000058BC],#45//Target Map
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_2L
+mov dword ptr [ebp+000058C0],(float)856.808//X
+mov dword ptr [ebp+000058C4],(float)3.700//Y
+mov dword ptr [ebp+000058C8],(float)307.168//Z
+jmp exit
+go_2L:
+mov dword ptr [ebp+000058C0],(float)923.690//X
+mov dword ptr [ebp+000058C4],(float)9.660//Y
+mov dword ptr [ebp+000058C8],(float)864.700//Z
+jmp exit
+
+go_3:
+mov [ebp+000058BC],#46//Target Map
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_3L
+mov dword ptr [ebp+000058C0],(float)926.791//X
+mov dword ptr [ebp+000058C4],(float)64.278//Y
+mov dword ptr [ebp+000058C8],(float)82.564//Z
+jmp exit
+go_3L:
+mov dword ptr [ebp+000058C0],(float)887.282//X
+mov dword ptr [ebp+000058C4],(float)34.547//Y
+mov dword ptr [ebp+000058C8],(float)475.367//Z
+jmp exit
+
+go_4:
+mov [ebp+000058BC],#47//Target Map
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_4L
+mov dword ptr [ebp+000058C0],(float)571.370//X
+mov dword ptr [ebp+000058C4],(float)6.400//Y
+mov dword ptr [ebp+000058C8],(float)194.080//Z
+jmp exit
+go_4L:
+mov dword ptr [ebp+000058C0],(float)12.580//X
+mov dword ptr [ebp+000058C4],(float)8.400//Y
+mov dword ptr [ebp+000058C8],(float)454.080//Z
+jmp exit
+
+go_5:
+mov [ebp+000058BC],#70//Target Map
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_5L
+mov dword ptr [ebp+000058C0],(float)155.23//X
+mov dword ptr [ebp+000058C4],(float)38.420//Y
+mov dword ptr [ebp+000058C8],(float)175.27//Z
+jmp exit
+go_5L:
+mov dword ptr [ebp+000058C0],(float)1481.230//X
+mov dword ptr [ebp+000058C4],(float)32.260//Y
+mov dword ptr [ebp+000058C8],(float)163.25//Z
+jmp exit
+
+go_6:
+mov [ebp+000058BC],#42//Target Map
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_6L
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+go_6L:
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+
+go_7:
+mov [ebp+000058BC],#42//Target Map
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_7L
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+go_7L:
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+
+go_8:
+mov [ebp+000058BC],#30//Target Map
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_8L
+mov dword ptr [ebp+000058C0],(float)762.560//X
+mov dword ptr [ebp+000058C4],(float)24.345//Y
+mov dword ptr [ebp+000058C8],(float)800.540//Z
+jmp exit
+go_8L:
+mov dword ptr [ebp+000058C0],(float)358.254//X
+mov dword ptr [ebp+000058C4],(float)6.960//Y
+mov dword ptr [ebp+000058C8],(float)228.625//Z
+jmp exit
+
+go_9:
+mov [ebp+000058BC],#42//Target Map
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_9L
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+go_9L:
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+
+go_10:
+mov [ebp+000058BC],#42//Target Map
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_10L
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+go_10L:
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+
+go_11:
+mov [ebp+000058BC],#42//Target Map
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_11L
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+go_11L:
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+
+go_12:
+mov [ebp+000058BC],#42//Target Map
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_12L
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+go_12L:
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+
+go_13:
+mov [ebp+000058BC],#42//Target Map
+cmp byte ptr [ebp+0000012D],0//Faction Check
+je go_13L
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+go_13L:
+mov dword ptr [ebp+000058C0],(float)1190.831//X
+mov dword ptr [ebp+000058C4],(float)10.509//Y
+mov dword ptr [ebp+000058C8],(float)1020.238//Z
+jmp exit
+
+exit:
+push eax
+call dword ptr [005540D0]
+add eax,(int)1000 // in miliseconds
+mov [ebp+6400],eax
+pop eax
+xor eax,eax
+mov eax,[ebp+000000D0]
+mov [ebp+6404],eax
+mov eax,[ebp+000000D8]
+mov [ebp+6408],eax
+mov [ebp+000058B8],1//Activator
+mov [ebp+000058B4],1//Activator
+jmp 0047FC57
+
+continue:
+movzx eax,word ptr [ebx]
+add eax,FFFFEEFF
+jmp returnhere
+
+command:
+db '!go '
+db 00
+
+go0:
+db '0'
+db 00
+
+go1:
+db '1'
+db 00
+
+go2:
+db '2'
+db 00
+
+go3:
+db '3'
+db 00
+
+go4:
+db '4'
+db 00
+
+go5:
+db '5'
+db 00
+
+go6:
+db '6'
+db 00
+
+go7:
+db '7'
+db 00
+
+go8:
+db '8'
+db 00
+
+go9:
+db '9'
+db 00
+
+go10:
+db '10'
+db 00
+
+go11:
+db '11'
+db 00
+
+go12:
+db '12'
+db 00
+
+go13:
+db '13'
+db 00
+
+"ps_game.exe"+7F4A9:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+7F4A9:
+movzx eax,word ptr [ebx]
+add eax,FFFFEEFF
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>801</ID>
+      <Description>"cross faction"</Description>
+      <Options moAlwaysHideChildren="1" moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>731</ID>
+          <Description>"Cross Faction Trading"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+0047D9AA:
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+
+[DISABLE]
+
+0047D9AA:
+mov cl, byte ptr [eax+12D]
+cmp cl, byte ptr [ebx+12D]
+jne 0047E0DA
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>243</ID>
+          <Description>"Cross Faction Whisper"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0047f629:
+db 90 90 90 90 90 90
+
+0047ff69:
+db 90 90 90 90 90 90
+
+
+[DISABLE]
+0047f629:
+db 0F 85 DF 00 00 00
+
+0047ff69:
+db 0F 85 DF 00 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>732</ID>
+          <Description>"Cross Faction Area Chat (AH)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+
+newmem:
+cmp byte ptr [ecx+5808],2
+jbe 004270ED
+
+cmp byte ptr [ecx+160],#42
+je 004270ED
+
+mov dl, byte ptr [esp+18]
+cmp dl, byte ptr [ecx+12D]
+jmp returnhere
+
+004270E1:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+
+004270E1:
+mov dl, byte ptr [esp+18]
+cmp dl, byte ptr [ecx+12D]
+
+dealloc(newmem)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>733</ID>
+          <Description>"Cross Faction Inspect"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+00477D3D:
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+
+[DISABLE]
+
+00477D3D:
+mov cl, byte ptr [edi+12D]
+cmp cl, byte ptr [eax+12D]
+jne 00478048
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

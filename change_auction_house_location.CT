@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>534</ID>
+      <Description>"AH Change Rune Location"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Credits to Eric-Dutra16
+[ENABLE]
+
+// Light Auction House Spawn Points
+
+// Light
+0056E628:
+dd #42 // MapID
+
+dd (float)979.046 // X
+dd (float)34.468 // Y
+dd (float)1589.060 // Z
+
+// Fury
+0056E638:
+dd #42 // MapID
+
+dd (float)979.046 // X
+dd (float)34.468 // Y
+dd (float)1589.060 // Z
+
+
+[DISABLE]
+
+0056E628:
+dd 0000002A
+
+dd 429D3852
+dd 4175C28F
+dd 41DF999A
+
+0056E638:
+dd 0000002A
+
+dd 41BB1EB8
+dd 4175C28F
+dd 42D4CCCD
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
